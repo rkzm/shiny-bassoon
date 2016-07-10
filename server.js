@@ -2,18 +2,29 @@
 
   "use strict";
 
-  var express = require('express');
+  var express, bodyparser, port, server;
 
-  var PORT = 8080;
+  express = require('express');
+  
+  bodyparser = require('body-parser');
+
+  port = process.env.PORT || 8080;
 
   var app = express();
 
+  app.use(bodyparser.urlencoded({ extended: true }));
+
+  app.use(bodyparser.json());
+
   app.get('/', function (req, res) {
-    res.send('Hello world\n');
+    var jsobject = {"greeting":"Hello world"};
+    res.json(jsobject);
   });
 
-  app.listen(PORT);
+  server = app.listen(port, function () {
+    console.log('App is running my server on PORT: ' + port);
+  });
 
-  console.log('Running on http://localhost:' + PORT);
+  module.exports = server;
 
 } ());
