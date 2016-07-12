@@ -1,23 +1,34 @@
 (function () {
 
   "use strict";
-
-  var express, bodyparser, port, server;
+  var express, bodyparser, port, server, bookrouter, app;
 
   express = require('express');
-  
+  bookrouter = express.Router();
   bodyparser = require('body-parser');
-
+  app = express();
   port = process.env.PORT || 8080;
 
-  var app = express();
-
+    
   app.use(bodyparser.urlencoded({ extended: true }));
-
   app.use(bodyparser.json());
-
+  
   app.get('/', function (req, res) {
-    var jsobject = {"greeting":"Hello world"};
+    var jsobject = [{
+        "title": "Kilimanjaro",
+        "greeting": "Hello world",
+        "genre": "Drama",
+        "author": "Makena",
+        "read": false
+      },
+      {
+        "title": "Kilimanjaro",
+        "greeting": "Hello world",
+        "genre": "Drama",
+        "author": "Makena",
+        "read": false
+      }];
+    
     res.json(jsobject);
   });
 
