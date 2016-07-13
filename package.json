@@ -9,6 +9,10 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "mongoose": "^4.5.4"
+  },
+  "devDependencies": {
+    "nock": "^8.0.0"
   }
 }
