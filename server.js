@@ -1,5 +1,5 @@
 
-  var express, bodyparser, port, server, bookrouter, app, Book, db, mongoose;
+  var express, bodyparser, port, server, bookrouter, app, Book, db, mongoose, url;
 
   express = require('express');
   Book = require('./models/bookmodel');
@@ -8,7 +8,13 @@
   app = express();
   port = process.env.PORT || 8080;
   mongoose = require('mongoose');
-  db = mongoose.connect('mongodb://localhost/bookapi');
+  url = 'mongodb://' + process.env.MONGO_PORT_27017_TCP_ADDR + ':27017/dockerdemo';
+  // mongoose.connect(url, function (err, database) {
+  //   console.log("Connected correctly to server");
+  //   db = database;
+  // });
+  db = mongoose.connect('nashamongo');
+  // db = mongoose.connect(url);
     
   app.use(bodyparser.urlencoded({ extended: true }));
   app.use(bodyparser.json());
@@ -20,3 +26,7 @@
   });
 
   module.exports = server;
+
+
+//docker run  -p external:Internal -v $(pwd):"/var/www/" -w "/var/www/" node npm start
+//this will create a working environment running in a container
