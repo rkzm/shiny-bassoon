@@ -1,13 +1,16 @@
 FROM node:argon
 
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+MAINTAINER reptileinx
 
-# Install app dependencies
+ENV NODE_ENV=production 
+ENV PORT=3000
+
+COPY      . /var/www
+WORKDIR   /var/www
+
 COPY . /usr/src/app/
 RUN npm install
 
-EXPOSE 8080
+EXPOSE $PORT
 
 CMD [ "npm", "start" ]
