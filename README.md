@@ -80,8 +80,12 @@ docker run -t -i reptileinx/pluralsight-base /bin/bash
 docker run  -p external:Internal -v $(pwd):"/var/www/" -w "/var/www/" node npm start
 this will create a working environment running in a container
 
+- Using linking (legacy) for containers to communicate
+$ docker run -d --name {container_name} image
+$ docker run -d -p 3000:3000 --link {that_container_alias}:{that_container_image} --name {container_name} image
+$ docker run -d -p 3000:3000 --link nashamongo:mongo --name api_name node_image
 
-- Using the network approach to isolate docker containers
+- Using the network bridge driver approach to isolate docker containers
 1. creating an isolated network named isolated_network
 $docker network create --driver bridge isolated_network
 2. running my mongodb container in the isolated network
@@ -135,6 +139,39 @@ $ docker network inspect isolated_network
 ]
 
 
+- linking multiple containers - > introducing docker-compose
+- use docker compose to build service. use docker compose to manage containers
+- start up and tear down
+docker compose yaml file.
+- this is a normal text file that defines our services.
+- docker compose build process builds services (images)
+- on dev machine we can build up containers
+- get the containers running
+
+docker compose yaml file
+- version: '2'
+- services: what you want to be running (db, cache)
+   - configurations
+      build context (folder,  docker file)
+      environement variables (put into service at run time)
+      images: if an image already exists 
+      networks: associate with network 
+      ports:
+      volumes:
+- for yaml mind the indentation
+
+- build dockerfile into images
+$ docker-compose build
+$ docker-compose up, down, logs, ps, stop, start, rm
+
+- building individual images 
+$ docker-compose build mongo
+
+- bringing up service with no dependancies
+$ docker-compose up --no-deps node
+--no-deps ... will allow docker-compose not to recreate node dependant containers (services)
+- remove all volumes and images
+$ docker-compose down --rmi all --volumes
 
 Note: docker machine allows automatic share of home directories
 - How to confirm this--->
