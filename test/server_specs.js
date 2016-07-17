@@ -25,7 +25,7 @@ describe('The Books /Api ', function () {
           read: false
         }];
     });
-    
+
     it('Returns with List of Books', function (done) {
       var scope = nock('http://localhost:3000')
         .persist()

@@ -2,8 +2,7 @@ FROM node:argon
 
 MAINTAINER reptileinx
 
-ENV NODE_ENV=production 
-ENV PORT=3000
+ENV NODE_ENV=production, PORT=3000, CONN=nashamongo
 
 COPY      . /var/www
 WORKDIR   /var/www
