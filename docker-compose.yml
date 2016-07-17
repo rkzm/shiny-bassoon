@@ -1,7 +1,5 @@
 version: '2'
-
 services:
-
   node:
     container_name: bk-api
     build: 
