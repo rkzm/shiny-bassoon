@@ -13,6 +13,7 @@ services:
   mongodb:
     container_name: nashamongo
     image: mongo
+    command: mongod --smallfiles
     networks:
       - nodeapp-network
 

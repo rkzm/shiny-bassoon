@@ -2,7 +2,7 @@ FROM node:argon
 
 MAINTAINER reptileinx
 
-ENV NODE_ENV=production, PORT=3000, CONN=nashamongo
+ENV NODE_ENV=production, PORT=3000, CONN='mongodb://nashamongo:27017/books'
 
 COPY      . /var/www
 WORKDIR   /var/www
