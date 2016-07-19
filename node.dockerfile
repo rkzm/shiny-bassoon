@@ -1,15 +1,11 @@
-FROM node:argon
+FROM node:6.1.0
 
 MAINTAINER reptileinx
 
-ENV NODE_ENV=production, PORT=3000, CONN='mongodb://nashamongo:27017/books'
-
-COPY      . /var/www
-WORKDIR   /var/www
+RUN mkdir -p /usr/src/app
 
 COPY . /usr/src/app/
+
 RUN npm install
 
-EXPOSE $PORT
-
-CMD [ "npm", "start" ]
+CMD [ "node", "server.js" ]

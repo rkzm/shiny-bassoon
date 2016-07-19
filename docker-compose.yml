@@ -1,14 +1,21 @@
 version: '2'
 services:
-  node:
+  api:
     container_name: bk-api
     build: 
       context: .
       dockerfile: node.dockerfile
     ports:
-     - "3000:3000"
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
     networks:
       - nodeapp-network
+    depends_on:
+      - mongo
+    environment:
+      MONGODB_URI: "mongodb://mongo:27017/nashamongo"
       
   mongodb:
     container_name: nashamongo
