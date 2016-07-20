@@ -17,7 +17,7 @@ services:
     environment:
       MONGODB_URI: "mongodb://mongo:27017/nashamongo"
       
-  mongodb:
+  mongo:
     container_name: nashamongo
     image: mongo
     command: mongod --smallfiles

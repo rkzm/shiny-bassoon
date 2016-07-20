@@ -13,7 +13,7 @@
   
   app = express();
   port = process.env.PORT || 3000;
-  connection_string = process.env.CONN || 'mongodb://localhost/bookapi';
+  connection_string = process.env.MONGODB_URI || 'mongodb://localhost/bookapi';
   db = mongoose.connect(connection_string);    
   // create a write stream (in append mode)
   accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});

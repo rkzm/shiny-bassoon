@@ -1,4 +1,4 @@
-FROM node:6.1.0
+FROM node
 
 MAINTAINER reptileinx
 
