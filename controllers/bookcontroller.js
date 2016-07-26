@@ -4,11 +4,12 @@ var bookcontroller = function (Book) {
         if (!req.body.title) {
             res.status(400);
             res.send('Title is required');
-        } else {
+            return;
+        }   
             book.save();
             res.status(201);
             res.send(book);
-        }
+        
     };
 
     var get = function (req, res) {
