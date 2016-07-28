@@ -6,6 +6,11 @@ var bookcontroller = function (Book) {
             res.send('Title is required');
             return;
         }   
+        if (!req.body.author) {
+            res.status(400);
+            res.send('Author is required');
+            return;
+        } 
             book.save();
             res.status(201);
             res.send(book);
