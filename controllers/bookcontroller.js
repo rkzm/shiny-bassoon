@@ -5,15 +5,15 @@ var bookcontroller = function (Book) {
             res.status(400);
             res.send('Title is required');
             return;
-        }   
+        }
         if (!req.body.author) {
             res.status(400);
             res.send('Author is required');
             return;
-        } 
-            book.save();
-            res.status(201);
-            res.send(book);
+        }
+        book.save();
+        res.status(201);
+        res.send(book);
     };
 
     var get = function (req, res) {
@@ -26,7 +26,7 @@ var bookcontroller = function (Book) {
                 res.status(500).send(err);
             } else {
                 var returnBooks = [];
-                books.forEach(function(element, index, array){
+                books.forEach(function (element, index, array) {
                     var newBook = element.toJSON();
                     newBook.links = {};
                     newBook.links.self = 'http://' + req.headers.host + '/api/books/' + newBook._id;
