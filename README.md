@@ -12,7 +12,8 @@
   ```  
   $docker-machine start {docker_machine_name}
   ```
-- Setting the correct environment variables for docker client to connect to docker-machine 
+- Setting the correct environment variables for docker client to connect to docker-machine
+- the 'env' command will display the list of commands to run to get this done correctly.
   ```
   $ docker-machine env {docker_machine_name}
   ```
