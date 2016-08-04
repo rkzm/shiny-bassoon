@@ -1,4 +1,4 @@
-### Dump of notes - needs fixing
+### Development environment for Nodejs using Docker
 
 - Installing docker on mac
   ```

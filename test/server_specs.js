@@ -8,7 +8,8 @@ nock = require('nock');
 
 describe('The Books /Api ', function () {
   describe('When /Books Is Hit', function () {
-    beforeEach(function () {
+    beforeEach(function (done) {
+      nock.cleanAll();
       validResponse = [
         {
           _id: "5771078e0a5f438d90501345",
@@ -24,6 +25,7 @@ describe('The Books /Api ', function () {
           author: "Victor Hugo",
           read: false
         }];
+        done();
     });
 
     it('Returns with List of Books', function (done) {
