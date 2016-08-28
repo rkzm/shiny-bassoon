@@ -14,7 +14,7 @@ describe('Book Controller Tests:', function () {
             bookController = require('../controllers/bookcontroller')(Book);
         });
 
-        it.only('should not allow an empty title on post', function () {
+        it('should not allow an empty title on post', function () {
             var req = {
                 body: {
                     author: 'Makena'
