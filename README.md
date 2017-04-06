@@ -80,7 +80,7 @@
   
 - Notice the container runs as pid 1 and exists this means that docker daemon will send the kill command to our application and it will terminate gracefully. if we removed the exec command and just ran '$@' then entrypoint will be pid 1 and the command we pass in will be pid 10 or something bad container temination for more information go to https://docs.docker.com/machine/get-started/
   ```
-  $ docker run -t -i reptileinx/pluralsight-base /bin/bash
+  $ docker run -t -i reptileinx/mysight-base /bin/bash
   docker run  -p external:Internal -v $(pwd):"/var/www/" -w "/var/www/" node npm start
   ...this will create a working environment running in a container
   ```
