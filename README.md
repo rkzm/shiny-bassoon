@@ -4,36 +4,19 @@
 
 - Docker image creation approach.
     Base image - establish minimum runtime environment including application dependencies, system configuration, default settings.
-    Release Image - install application - application configuration, application entrypoint.
+    Release Image - install application - application configuration, application Entrypoint.
 
 - to create a docker image from a docker file run
-  ```
-  $ docker build -t {some_repo/tag_name} -f node.docker .
-  ```
-- rm flag removes the container after it exists ps
-  ```
-  $ docker run -rm {some_repo/tag_name} ps
+  ```bash
+     $ docker build -t {some_repo/tag_name} -f node.docker .
+     $ docker run --rm {some_repo/tag_name} ps
+     # --rm flag removes the container after it exists ps
 
-  $ docker images - lists images
-  REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
-  centos                    centos6             cf2c3ece5e41        4 days ago          194.6 MB
-  ubuntu                    latest              0f192147631d        6 days ago          132.8 MB
-  <none>                    <none>              2fa927b5cdd3        5 weeks ago         122 MB
+     $ docker images | grep api
+     # will list images and grep for api
   ```
+### Hooking API container to mongodb
 
-- gracefully terminating docker containers
-  ```
-  $ docker run --rm {some_repo/tag_name} ps
-    PID TTY          TIME CMD
-    1 ?        00:00:00 ps
-  ```
-
-- Notice the container runs as pid 1 and exists this means that docker daemon will send the kill command to our application and it will terminate gracefully. if we removed the exec command and just ran '$@' then entrypoint will be pid 1 and the command we pass in will be pid 10 or something bad container temination for more information go to https://docs.docker.com/machine/get-started/
-  ```
-  $ docker run -t -i reptileinx/mysight-base /bin/bash
-  docker run  -p external:Internal -v $(pwd):"/var/www/" -w "/var/www/" node npm start
-  ...this will create a working environment running in a container
-  ```
 - Using linking (legacy) for containers to communicate
   ```
   $ docker run -d --name {container_name} image
@@ -50,13 +33,13 @@
   $ docker run -d --net=isolated_network --name {container_name} image
   $ docker run -d --net=isolated_network --name exampledb mongo
   ```
-3. any container brought up in this network will talk to another in this network. Running my api code in defined network
+  3. any container brought up in this network will talk to another in this network. Running my api code in defined network
   ```
   $ docker run -d --net=isolated_network --name {container_name} -p 3000:3000 {some_repo/tag_name}
   ...the port 3000 has to be exposed on the container_name image
   ```
 - inpect what is running on my custom defined networks
-  ```
+  ```bash
   $ docker network inspect isolated_network
         [
             {
