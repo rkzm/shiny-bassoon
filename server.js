@@ -1,23 +1,23 @@
-  var express, bodyparser, port, server, bookrouter,  
-      app, Book, db, mongoose, url, connection_string, accessLogStream,
-      fs, morgan, path;
+  var express, bodyparser, port, server, bookrouter,
+      app, Book, mongoose, url, connection_string, accessLogStream,
+      fs, morgan, path, db;
 
   fs = require('fs');
   morgan = require('morgan');
   path = require('path');
   express = require('express');
+  db = require('./lib/database');
   Book = require('./models/bookmodel');
   bookrouter = require('./routes/bookroutes')(Book);
   bodyparser = require('body-parser');
   mongoose = require('mongoose');
-  
+
   app = express();
   port = process.env.PORT || 3000;
-  connection_string = process.env.MONGODB_URI || 'mongodb://localhost/bookapi';
-  db = mongoose.connect(connection_string);    
+
   // create a write stream (in append mode)
   accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
-  
+
   app.use(bodyparser.urlencoded({ extended: true }));
   app.use(bodyparser.json());
   app.use('/api/books', bookrouter);

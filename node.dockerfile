@@ -2,10 +2,12 @@ FROM node
 
 MAINTAINER reptileinx
 
-RUN mkdir -p /usr/src/app
+WORKDIR /app
 
-COPY . /usr/src/app/
+COPY package.json package.json
 
-RUN npm install
+RUN npm install && npm audit fix --force
+
+COPY . .
 
 CMD [ "node", "server.js" ]
