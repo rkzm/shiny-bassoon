@@ -97,14 +97,14 @@ docker compose yaml file.
         services: what you want to be running (db, cache)
            configurations
               build context (folder,  docker file)
-              environement variables (put into service at run time)
+              environment variables (put into service at run time)
               images: if an image already exists
               networks: associate with network
               ports:
               volumes:
         for yaml mind the indentation
     ```
-- build dockerfile into images
+- build Dockerfile into images
     ```
     $ docker-compose build
     $ docker-compose up, down, logs, ps, stop, start, rm
