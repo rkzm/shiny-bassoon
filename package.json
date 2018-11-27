@@ -8,23 +8,23 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.13.3",
-    "fs": "0.0.2",
-    "gulp": "^3.9.1",
-    "gulp-nodemon": "^2.1.0",
-    "lodash": "^4.13.1",
-    "mongoose": "^5.3.9",
-    "morgan": "^1.7.0",
-    "path": "^0.12.7"
+    "body-parser": "*",
+    "express": "*",
+    "fs": "*",
+    "gulp": "^4.0.0",
+    "gulp-nodemon": "*",
+    "lodash": "*",
+    "mongoose": "*",
+    "morgan": "*",
+    "path": "*"
   },
   "devDependencies": {
-    "faker": "^4.1.0",
-    "gulp-mocha": "^6.0.0",
-    "nock": "^10.0.2",
-    "should": "^13.2.3",
-    "sinon": "^7.1.1",
-    "supertest": "^3.3.0",
-    "chalk": "^1.0.0"
+    "chalk": "^2.4.1",
+    "faker": "*",
+    "gulp-mocha": "*",
+    "nock": "*",
+    "should": "*",
+    "sinon": "*",
+    "supertest": "*"
   }
 }
