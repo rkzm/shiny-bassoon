@@ -1,32 +1,47 @@
-### Development environment for Nodejs using Docker
+# Development environment for NodeJs using Docker
+We created this repository when we first started learning about Docker. We have moved it here so we can update some of the things we did then. Also we are interested to see if it still works :smile:
 
-- Assumes docker and docker-compose have been installed and configured correctly on your machine
+This document assumes docker and docker-compose have been installed and configured correctly on your machine
 
-- Docker image creation approach.
+## Docker image creation approach.
     Base image - establish minimum runtime environment including application dependencies, system configuration, default settings.
     Release Image - install application - application configuration, application Entrypoint.
 
-- to create a docker image from a docker file run
+## create a docker image from a docker file run
   ```bash
-     $ docker build -t {some_repo/tag_name} -f node.docker .
-     $ docker run --rm {some_repo/tag_name} ps
-     # --rm flag removes the container after it exists ps
+     # notice the -f to indicate the Dockerfile to use
+     $ docker build -t <some_repo/tag_name> -f node.docker .
 
-     $ docker images | grep api
-     # will list images and grep for api
+     # --rm flag removes the container after it exists ps
+     $ docker run --rm {some_repo/tag_name} ps
+
+     # will list images and grep for tag_name
+     $ docker images | grep tag_name
   ```
+
+## Pull `Mongodb` image to local machine
+
+  ```bash
+    docker pull mongo
+  ```
+
+## Manual run of application
+
 ### Hooking API container to mongodb
 
-- Using linking (legacy) for containers to communicate
+#### Using linking (legacy) for containers to communicate
+  ```bash
+    # start the mongo container
+    # notice the `-d` to run in detached mode so we can continue working on the terminal
+    $ docker run -d --name <mongo_container_name> mongo_image
+    # Create the app container and link it to mongo
+    $ docker run -d -p 3000:3000 --link <mongo_container_name>:<mongo_image> --name <app_container_name> <app_image>
   ```
-  $ docker run -d --name {container_name} image
-  $ docker run -d -p 3000:3000 --link {that_container_alias}:{that_container_image} --name {container_name} image
-  $ docker run -d -p 3000:3000 --link nashamongo:mongo --name api_name node_image
-  ```
-- Using the network bridge driver approach to isolate docker containers
+
+#### Using the network bridge driver approach to isolate docker containers
   1. creating an isolated network named isolated_network
-  ```
-  $ docker network create --driver bridge isolated_network
+  ```bash
+    $ docker network create --driver bridge isolated_network
   ```
   2. running my mongodb container in the isolated network
   ```
