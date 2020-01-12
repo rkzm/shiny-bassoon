@@ -2,11 +2,12 @@
   "name": "docker_web_app",
   "version": "1.0.0",
   "description": "Node.js on Docker",
-  "author": "reptileinx <reptileinx@gmail.com>",
+  "author": "rkzm <rkzm@github.com>",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
+  "license": "MIT",
   "dependencies": {
     "body-parser": "*",
     "express": "*",
@@ -26,5 +27,9 @@
     "should": "*",
     "sinon": "*",
     "supertest": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rkzm/shiny-bassoon.git"
   }
 }

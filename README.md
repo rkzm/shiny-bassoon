@@ -7,7 +7,7 @@ This document assumes docker and docker-compose have been installed and configur
     Base image - establish minimum runtime environment including application dependencies, system configuration, default settings.
     Release Image - install application - application configuration, application Entrypoint.
 
-## create a docker image from a docker file run
+## Create a docker image from a docker file run
   ```bash
      # notice the -f to indicate the Dockerfile to use
      $ docker build -t <some_repo/tag_name> -f node.docker .
@@ -25,35 +25,43 @@ This document assumes docker and docker-compose have been installed and configur
     docker pull mongo
   ```
 
-## Manual run of application
+## Different ways of networking two containers
 
-### Hooking API container to mongodb
+### Hooking API container to Mongo DB
 
+The code shows that we have an API that needs to run using Mongo DB. The sections below will demonstrate how we can hook up the API to talk to the Database.
+
+---
 #### Using linking (legacy) for containers to communicate
   ```bash
     # start the mongo container
     # notice the `-d` to run in detached mode so we can continue working on the terminal
     $ docker run -d --name <mongo_container_name> mongo_image
+
     # Create the app container and link it to mongo
     $ docker run -d -p 3000:3000 --link <mongo_container_name>:<mongo_image> --name <app_container_name> <app_image>
   ```
 
+---
 #### Using the network bridge driver approach to isolate docker containers
-  1. creating an isolated network named isolated_network
+  1. Create an isolated network named `isolated_network`
   ```bash
     $ docker network create --driver bridge isolated_network
   ```
-  2. running my mongodb container in the isolated network
+
+  2. Run Mongo container in the created `isolated_network`
+  ```bash
+  $ docker run -d --net=isolated_network --name <container_name> <mongo_image>
   ```
-  $ docker run -d --net=isolated_network --name {container_name} image
-  $ docker run -d --net=isolated_network --name exampledb mongo
+
+  3. Containers running in the same network talk to one another. Lets run the API code in the defined network
+  ```bash
+  $ docker run -d --net=isolated_network --name <app_container_name> -p 3000:3000 <some_repo/tag_name>
+
+  # the port 3000 has to be exposed on the app_container_name image
   ```
-  3. any container brought up in this network will talk to another in this network. Running my api code in defined network
-  ```
-  $ docker run -d --net=isolated_network --name {container_name} -p 3000:3000 {some_repo/tag_name}
-  ...the port 3000 has to be exposed on the container_name image
-  ```
-- inpect what is running on my custom defined networks
+
+  Run inpect what is running on the custom defined network
   ```bash
   $ docker network inspect isolated_network
         [
@@ -96,19 +104,20 @@ This document assumes docker and docker-compose have been installed and configur
         ]
   ```
 
-#### linking multiple containers - > introducing docker-compose
-- use docker compose to build service. use docker compose to manage containers
-- start up and tear down
-docker compose yaml file.
-- this is a normal text file that defines our services.
-- docker compose build process builds services (images)
-- on dev machine we can build up containers
-- get the containers running
+---
+#### Linking multiple containers
+The best way is to use [container orchestration tools](https://en.wikipedia.org/wiki/Orchestration_(computing)).  Here we will start by looking at [Docker Compose](https://docs.docker.com/compose/). Some of the things we will do include:
+- use Docker Compose to build services.
+- use Docker Compose to manage containers
+- start up and tear down docker compose infrastructure defined in a yaml file.
+- a YAML file is a text file that defines our services.
+- Docker Compose build process builds services (images)
+- we can also get the containers running through compose
 
-#### docker compose yaml file
+An outline of some of the fields in a `docker-compose.yml` file can be seen below
 
-    ```
-        version: '2'
+    ```yaml
+        version: '3'
         services: what you want to be running (db, cache)
            configurations
               build context (folder,  docker file)
@@ -117,12 +126,15 @@ docker compose yaml file.
               networks: associate with network
               ports:
               volumes:
-        for yaml mind the indentation
+        # for yaml mind the indentation
     ```
-- build Dockerfile into images
-    ```
-    $ docker-compose build
-    $ docker-compose up, down, logs, ps, stop, start, rm
+
+Build images from Dockerfiles using Docker Compose commands
+    ```bash
+      $ docker-compose build
+      $ docker-compose up
+      # some other useful commands 
+      # down, logs, ps, stop, start, rm
     ```
 - building individual images
   ```

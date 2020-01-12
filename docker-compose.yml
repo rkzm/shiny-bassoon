@@ -1,7 +1,7 @@
-version: '2'
+version: '3'
 services:
   api:
-    container_name: bk-api
+    container_name: book-api
     build:
       context: .
       dockerfile: node.dockerfile
@@ -21,7 +21,7 @@ services:
   mongo:
     container_name: nashamongo
     image: mongo
-    command: mongod --smallfiles
+    command: mongod
     networks:
       - nodeapp-network
 
